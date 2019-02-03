@@ -48,7 +48,6 @@ class WeasleyClockCard extends HTMLElement {
       this.ctx = this.canvas.getContext("2d");
     }
 
-    this.canvas.style.backgroundColor = '#FFF';
     this.canvas.style.maxWidth = "-webkit-fill-available";
     this.canvas.style.maxHeight = "-webkit-fill-available";
     //this.canvas.style.width = "500";
