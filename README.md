@@ -41,7 +41,7 @@ I decided to make it public so that other (more skillful) people could make use 
 * locations (optional): a list of locations that are permanently visible, others are added/removed as required
 * wizards (required): a list of entities and display names for the device trackers/calendars used to represent your wizards
 * fontname (required): the name of the font you want to use in the clock
-* fontface (optional): a fontface string to choose the font you want, or select a custom web-font to load
+* fontface (optional): a fontface string to select a custom web-font to load
 
 ```
 type: 'custom:weasley-card'
