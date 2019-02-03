@@ -39,7 +39,8 @@ I decided to make it public so that other (more skillful) people could make use 
 ## Config
 
 * locations: a list of locations that are permanently visible, others are added/removed as required
-* 
+* wizards: a list of entities and display names for the device trackers/calendars used to represent your wizards
+* fontface: a fontface string to choose the font you want, or select a custom web-font to load
 
 ```
 type: 'custom:weasley-card'
@@ -70,3 +71,4 @@ These are features/ideas that I'd like to add at some point, but may not happen 
 * Make pretty: It looks fairly basic at the moment (I'm no artist!). Maybe include support for themes too, if that's possible?
 * Support for more entity types? 
 * Better text rendering - this goes along with making it pretty, perhaps include drawing the text in arcs around the outside of the clock, and handling longer location/wizard names better
+* Pre-load custom web font before rendering - if this is even possible?
