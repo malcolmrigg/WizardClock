@@ -38,9 +38,10 @@ I decided to make it public so that other (more skillful) people could make use 
 
 ## Config
 
-* locations: a list of locations that are permanently visible, others are added/removed as required
-* wizards: a list of entities and display names for the device trackers/calendars used to represent your wizards
-* fontface: a fontface string to choose the font you want, or select a custom web-font to load
+* locations (optional): a list of locations that are permanently visible, others are added/removed as required
+* wizards (required): a list of entities and display names for the device trackers/calendars used to represent your wizards
+* fontname (required): the name of the font you want to use in the clock
+* fontface (optional): a fontface string to choose the font you want, or select a custom web-font to load
 
 ```
 type: 'custom:weasley-card'
@@ -57,6 +58,7 @@ wizards:
     name: Ron
   - entity: calendar.ginny
     name: Ginny
+fontname: itcblkad_font
 fontface: >-
   font-family: itcblkad_font;    src: local(itcblkad_font),
   url('/local/custom-lovelace/ITCBLKAD.TTF') format('opentype');
