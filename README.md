@@ -12,7 +12,7 @@ I decided to make it public so that other (more skillful) people could make use 
 
 ## Features
 
-* Shows the current Zone that an entity is located in (only tested using the owntracks platform)
+* Shows the friendly name of the current Zone that an entity is located in (only tested using the owntracks platform)
 * If an entity isn't in a Zone then it marks that entity as "Lost"
 * If an entity has a velocity of greater than 15 then it marks that entity as "Travelling" (again, only tested using owntracks - and GPS must be turned on on your phone for velocity to be reported)
 * Locations are added dynamically as needed, however you can configure permanently shown locations by adding them to the "locations" list in the config
