@@ -14,7 +14,7 @@ class WeasleyClockCard extends HTMLElement {
     for (num = 0; num < this.config.wizards.length; num++){
       
       const state = this._hass.states[this.config.wizards[num].entity];
-      var stateStr = state ? 
+      var stateStr = state && state.state != "off" ? 
         (state.attributes ? 
           (state.attributes.message ? state.attributes.message : state.state) 
           : state.state
@@ -146,7 +146,7 @@ class WeasleyClockCard extends HTMLElement {
       var num;
       for (num = 0; num < wizards.length; num++){
         const state = this._hass.states[wizards[num].entity];
-        const stateStr = state ? 
+        const stateStr = state && state.state != "off" ? 
           (state.attributes ? 
             (state.attributes.message ? state.attributes.message : state.state) 
             : state.state
@@ -154,7 +154,7 @@ class WeasleyClockCard extends HTMLElement {
           :  "Lost";
         const stateVelo = state && state.attributes ? (state.attributes.velocity ? state.attributes.velocity : 0) : 0; 
         var locnum;
-        var wizardOffset = ((num-((wizards.length-1)/2)) / wizards.length * 0.75);
+        var wizardOffset = ((num-((wizards.length-1)/2)) / wizards.length * 0.6);
         var location = wizardOffset; // default
         for (locnum = 0; locnum < locations.length; locnum++){
           if ((locations[locnum].toLowerCase() == stateStr.toLowerCase()) 
