@@ -37,6 +37,18 @@ I decided to make it public so that other (more skillful) people could make use 
 5. Add your config, see the example below
 
 
+## Updating
+
+1. Copy the updated weasley-card.js over the old version
+2. Edit the url in the raw config editor to increment the version number, e.g:
+
+  ```
+  resources:
+    - type: js
+      url: /local/custom-lovelace/weasley-card.js?v=2
+  ```
+  
+
 ## Config
 
 * locations (optional): a list of locations that are permanently visible, others are added/removed as required
