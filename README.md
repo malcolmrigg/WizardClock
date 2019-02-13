@@ -1,5 +1,5 @@
 # WizardClock
-A wizarding clock Lovelace component for Home Assistant
+A wizarding/location "clock" Lovelace component for Home Assistant
 
 <img src="example.png" alt="Example wizarding clock" width="400">
 
