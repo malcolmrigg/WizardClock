@@ -18,6 +18,7 @@ I decided to make it public so that other (more skillful) people could make use 
 * Locations are added dynamically as needed, however you can configure permanently shown locations by adding them to the "locations" list in the config
 * For family members without a phone (or those that don't want to be tracked with owntracks!) it can use the google calendar platform - simply create a calendar with the expected locations of that person as the name of appointments at the appropriate times
 * Font face can be customised (I use "Blackadder" for a suitably wizardy look)
+* Hands animate fairly smoothly between states
 
 
 ## Installation
@@ -69,7 +70,7 @@ fontface: >-
 
 These are features/ideas that I'd like to add at some point, but may not happen any time soon. Feel free to add them yourself and share your code if you're able!
 
-* Animations: Changes in status produce nicely animated transitions instead of just jumping about
+* ~~Animations: Changes in status produce nicely animated transitions instead of just jumping about~~ Basic animations with ease-out now working, could do with ease-in too. Or possibly just going a bit mad and spinning round a couple of times before easing to the new location...
 * Make pretty: It looks fairly basic at the moment (I'm no artist!). Maybe include support for themes too, if that's possible?
 * Support for more entity types? 
 * Better text rendering - this goes along with making it pretty, perhaps include drawing the text in arcs around the outside of the clock, and handling longer location/wizard names better
