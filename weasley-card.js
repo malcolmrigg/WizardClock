@@ -2,6 +2,12 @@ class WeasleyClockCard extends HTMLElement {
   set hass(hass) {
     this._hass = hass;
     this.zones = [];
+    this.targetstate = [];
+  
+    if (this.lastframe && this.lastframe != 0){
+      cancelAnimationFrame(this.lastframe);
+      this.lastframe = 0;
+    }
 
     var num;
     if (this.config.locations){
@@ -66,8 +72,10 @@ class WeasleyClockCard extends HTMLElement {
     }
     this.fontScale = 1.1;
 
-    this.drawClock();
-    
+    var obj = this;
+    this.lastframe = requestAnimationFrame(function(){ 
+      obj.drawClock(); 
+    });
   }
 
   setConfig(config) {
@@ -78,6 +86,7 @@ class WeasleyClockCard extends HTMLElement {
     //   throw new Error('You need to define some locations');
     // }
     this.config = config;
+    this.currentstate = [];
   }
 
   // The height of your card. Home Assistant uses this to automatically
@@ -87,22 +96,44 @@ class WeasleyClockCard extends HTMLElement {
   }
 
   drawClock() {
+      this.lastframe = 0;
       this.ctx.clearRect(-this.canvas.width/2, -this.canvas.height/2, this.canvas.width/2, this.canvas.height/2)
       this.drawFace(this.ctx, this.radius);
       this.drawNumbers(this.ctx, this.radius, this.zones);
       this.drawTime(this.ctx, this.radius, this.zones, this.config.wizards);
       this.drawHinge(this.ctx, this.radius);
+      // request next frame if required
+      var redraw = false;
+      var num;
+      for (num = 0; num < this.currentstate.length; num++){
+        if (Math.round(this.currentstate[num].pos*100) != Math.round(this.targetstate[num].pos*100))
+        {
+          redraw = true;
+        }
+      }
+
+      if (redraw){
+        var obj = this;
+        this.lastframe = requestAnimationFrame(function(){ 
+          obj.drawClock(); 
+        });
+      }
   }
 
   drawFace(ctx, radius) {
-      ctx.beginPath();
-      ctx.arc(0, 0, radius, 0, 2*Math.PI);
-      ctx.fillStyle = '#f2e6d9';
-      ctx.fill();
+    ctx.shadowColor = null;
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
 
-      ctx.fillStyle = '#333';
-      ctx.lineWidth = radius*0.06;
-      ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, 2*Math.PI);
+    ctx.fillStyle = '#f2e6d9';
+    ctx.fill();
+
+    ctx.fillStyle = '#333';
+    ctx.lineWidth = radius*0.06;
+    ctx.stroke();
   }
 
   drawHinge(ctx, radius) {
@@ -143,6 +174,7 @@ class WeasleyClockCard extends HTMLElement {
   }
 
   drawTime(ctx, radius, locations, wizards){
+      this.targetstate = [];
       var num;
       for (num = 0; num < wizards.length; num++){
         const state = this._hass.states[wizards[num].entity];
@@ -167,7 +199,25 @@ class WeasleyClockCard extends HTMLElement {
         }
         //var location = locations.indexOf(wizards[num].location) + ((num-((wizards.length-1)/2)) / wizards.length * 0.75);
         location = location * Math.PI / locations.length * 2;
-        this.drawHand(ctx, location, radius*0.7, radius*0.1, wizards[num].name);
+        // set targetstate
+        this.targetstate.push({pos: location, length: radius*0.7, width: radius*0.1, wizard: wizards[num].name});
+      }
+      // update currentstate from targetstate
+      if (!this.currentstate)
+      {
+        this.currentstate = [];
+      }
+      for (num = 0; num < wizards.length; num++){
+        if (this.currentstate[num]){
+          this.currentstate[num].pos = this.currentstate[num].pos + ((this.targetstate[num].pos - this.currentstate[num].pos) / 60); 
+        } else {
+          // default to 12 o'clock to start
+          this.currentstate.push({pos: 0, length: this.targetstate[num].length, width: this.targetstate[num].width, wizard: this.targetstate[num].wizard});
+        }
+      }
+      // draw currentstate
+      for (num = 0; num < wizards.length; num++){
+        this.drawHand(ctx, this.currentstate[num].pos, this.currentstate[num].length, this.currentstate[num].width, this.currentstate[num].wizard);
       }
   }
 
@@ -192,10 +242,10 @@ class WeasleyClockCard extends HTMLElement {
     ctx.fillStyle = 'white';
     ctx.translate(0, -length/2);
     ctx.rotate(Math.PI/2)
-    if (pos < Math.PI) 
+    if (pos < Math.PI && pos >= 0) 
         ctx.rotate(Math.PI);
     ctx.fillText(wizard, 0, 0);
-    if (pos < Math.PI) 
+    if (pos < Math.PI && pos >= 0) 
         ctx.rotate(-Math.PI);
     ctx.rotate(-Math.PI/2);
     ctx.translate(0, length/2);
