@@ -25,7 +25,7 @@ class WeasleyClockCard extends HTMLElement {
           (state.attributes.message ? state.attributes.message : state.state) 
           : state.state
         )
-        :  "Lost";
+        :  "not_home";
       if (this._hass.states["zone." + stateStr])
       {
         stateStr = this._hass.states["zone." + stateStr].attributes.friendly_name;
