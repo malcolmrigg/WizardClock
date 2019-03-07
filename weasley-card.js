@@ -30,7 +30,7 @@ class WeasleyClockCard extends HTMLElement {
       {
         stateStr = this._hass.states["zone." + stateStr].attributes.friendly_name;
       }    
-      if (this.zones.indexOf(stateStr) == -1 && stateStr != "not_home") {
+      if (this.zones.indexOf(stateStr) == -1 && stateStr != "not_home" && stateStr != "Travelling") {
         this.zones.push(stateStr);
       }
     }
