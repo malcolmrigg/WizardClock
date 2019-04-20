@@ -184,7 +184,10 @@ class WeasleyClockCard extends HTMLElement {
             : state.state
           )
           :  "Lost";
-        const stateVelo = state && state.attributes ? (state.attributes.velocity ? state.attributes.velocity : 0) : 0; 
+        const stateVelo = state && state.attributes ? (
+          state.attributes.velocity ? state.attributes.velocity : (
+            state.attributes.moving ? 16 : 0
+          )) : 0; 
         var locnum;
         var wizardOffset = ((num-((wizards.length-1)/2)) / wizards.length * 0.6);
         var location = wizardOffset; // default
