@@ -19,6 +19,7 @@ I decided to make it public so that other (more skillful) people could make use 
 * For family members without a phone (or those that don't want to be tracked with owntracks!) it can use the google calendar platform - simply create a calendar with the expected locations of that person as the name of appointments at the appropriate times
 * Font face can be customised (I use "Blackadder" for a suitably wizardy look)
 * Hands animate fairly smoothly between states
+* "Lost" and "Travelling" state text can be customised
 
 
 ## Installation
@@ -55,6 +56,8 @@ I decided to make it public so that other (more skillful) people could make use 
 * wizards (required): a list of entities and display names for the device trackers/calendars used to represent your wizards
 * fontname (required): the name of the font you want to use in the clock
 * fontface (optional): a fontface string to select a custom web-font to load
+* lost (optional): text to display when an entity is lost, defaults to "Lost". 
+* travelling (optional): text to display when an entity is travelling, defaults to "Travelling"
 
 ```
 type: 'custom:weasley-card'
@@ -75,6 +78,8 @@ fontname: itcblkad_font
 fontface: >-
   font-family: itcblkad_font;    src: local(itcblkad_font),
   url('/local/custom-lovelace/ITCBLKAD.TTF') format('opentype');
+lost: 'In mortal peril'
+travelling: 'Between here and there'
 ```
 
 
