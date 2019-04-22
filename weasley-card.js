@@ -30,12 +30,12 @@ class WeasleyClockCard extends HTMLElement {
       {
         stateStr = this._hass.states["zone." + stateStr].attributes.friendly_name;
       }    
-      if (this.zones.indexOf(stateStr) == -1 && stateStr != "not_home" && stateStr != "Travelling") {
+      if (this.zones.indexOf(stateStr) == -1 && stateStr != "not_home" && stateStr != this.travellingState) {
         this.zones.push(stateStr);
       }
     }
-    this.zones.push("Travelling");
-    this.zones.push("Lost");
+    this.zones.push(this.travellingState);
+    this.zones.push(this.lostState);
     if (!this.canvas) {
       const card = document.createElement('ha-card');
       //card.header = 'Wizard Clock';
@@ -87,6 +87,8 @@ class WeasleyClockCard extends HTMLElement {
     // }
     this.config = config;
     this.currentstate = [];
+    this.lostState = config.lost ? config.lost : "Lost";
+    this.travellingState = config.travelling ? config.travelling : "Travelling";
   }
 
   // The height of your card. Home Assistant uses this to automatically
@@ -183,7 +185,7 @@ class WeasleyClockCard extends HTMLElement {
             (state.attributes.message ? state.attributes.message : state.state) 
             : state.state
           )
-          :  "Lost";
+          :  this.lostState;
         const stateVelo = state && state.attributes ? (
           state.attributes.velocity ? state.attributes.velocity : (
             state.attributes.moving ? 16 : 0
@@ -193,8 +195,8 @@ class WeasleyClockCard extends HTMLElement {
         var location = wizardOffset; // default
         for (locnum = 0; locnum < locations.length; locnum++){
           if ((locations[locnum].toLowerCase() == stateStr.toLowerCase()) 
-              || (locations[locnum] == "Travelling" && stateVelo > 15)
-              || (locations[locnum] == "Lost" && stateStr == "not_home" && stateVelo <= 15))
+              || (locations[locnum] == this.travellingState && stateVelo > 15)
+              || (locations[locnum] == this.lostState && stateStr == "not_home" && stateVelo <= 15))
           {
             location = locnum + wizardOffset;
             break;
