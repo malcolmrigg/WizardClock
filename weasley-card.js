@@ -151,8 +151,7 @@ class WeasleyClockCard extends HTMLElement {
 
   drawNumbers(ctx, radius, locations) {
       /* 
-        Look at integrating this code to draw the text on a curve rather than just straight text at an angle:
-        http://jsfiddle.net/hyyvpp8g/179/
+        Text on a curve code modified from function written by James Alford here: http://blog.graphicsgen.com/2015/03/html5-canvas-rounded-text.html
       */
       var ang;
       var num;
@@ -161,19 +160,62 @@ class WeasleyClockCard extends HTMLElement {
       ctx.textAlign="center";
       for(num= 0; num < locations.length; num++){
           ang = num * Math.PI / locations.length * 2;
+          // rotate to center of drawing position
           ctx.rotate(ang);
-          ctx.translate(0, -radius*0.80);
+ 
+          var startAngle = 0; 
+          var inwardFacing = true;
+          var kerning = 0; // can adjust kerning using this - maybe automatically adjust it based on text length? 
+          var text = locations[num].split("").reverse().join("");
+          // if we're in the bottom half of the clock then reverse the facing of the text so that it's not upside down
           if (ang > Math.PI / 2 && ang < ((Math.PI * 2) - (Math.PI / 2))) 
-              ctx.rotate(Math.PI);
-          //ctx.rotate(-ang); 
-          ctx.fillText(locations[num], 0, 0);
-          if (ang > Math.PI / 2 && ang < ((Math.PI * 2) - (Math.PI / 2))) 
-              ctx.rotate(-Math.PI);
-          //ctx.rotate(ang);
-          ctx.translate(0, radius*0.80);
+          {
+            startAngle = Math.PI;
+            inwardFacing = false;
+            text = locations[num];
+          }
+
+          // calculate height of the font. Many ways to do this - you can replace with your own!
+          var div = document.createElement("div");
+          div.innerHTML = text;
+          div.style.position = 'absolute';
+          div.style.top = '-10000px';
+          div.style.left = '-10000px';
+          div.style.fontFamily = this.selectedFont;
+          div.style.fontSize = radius*0.15*this.fontScale + "px";
+          document.body.appendChild(div);
+          var textHeight = div.offsetHeight;
+          document.body.removeChild(div);
+
+          // rotate 50% of total angle for center alignment
+          for (var j = 0; j < text.length; j++) {
+              var charWid = ctx.measureText(text[j]).width;
+              startAngle += ((charWid + (j == text.length-1 ? 0 : kerning)) / (radius - textHeight)) / 2 ;
+          }
+
+          // Phew... now rotate into final start position
+          ctx.rotate(startAngle);
+
+          // Now for the fun bit: draw, rotate, and repeat
+          for (var j = 0; j < text.length; j++) {
+              var charWid = ctx.measureText(text[j]).width; // half letter
+              // rotate half letter
+              ctx.rotate((charWid/2) / (radius - textHeight) * -1); 
+              // draw the character at "top" or "bottom" 
+              // depending on inward or outward facing
+              ctx.fillText(text[j], 0, (inwardFacing ? 1 : -1) * (0 - radius + textHeight ));
+
+              ctx.rotate((charWid/2 + kerning) / (radius - textHeight) * -1); // rotate half letter
+          }
+          // rotate back round from the end position to the central position of the text
+          ctx.rotate(startAngle);
+
+          // rotate to the next location
           ctx.rotate(-ang);
       }
   }
+
+
 
   drawTime(ctx, radius, locations, wizards){
       this.targetstate = [];
@@ -257,6 +299,7 @@ class WeasleyClockCard extends HTMLElement {
     
     ctx.rotate(-pos);
   }
+    
 }
 
 customElements.define('weasley-card', WeasleyClockCard);
