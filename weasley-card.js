@@ -18,19 +18,22 @@ class WeasleyClockCard extends HTMLElement {
       }
     }
     for (num = 0; num < this.config.wizards.length; num++){
-      
+      if (!this._hass.states[this.config.wizards[num].entity])
+        throw new Error("Unable to find state for entity " + this.config.wizards[num].entity);
       const state = this._hass.states[this.config.wizards[num].entity];
-      var stateStr = state && state.state != "off" ? 
+      var stateStr = state && state.state && state.state != "off" ? 
         (state.attributes ? 
           (state.attributes.message ? state.attributes.message : state.state) 
           : state.state
         )
         :  "not_home";
-      if (this._hass.states["zone." + stateStr])
+      if (this._hass.states["zone." + stateStr] && this._hass.states["zone." + stateStr].attributes && this._hass.states["zone." + stateStr].attributes.friendly_name)
       {
         stateStr = this._hass.states["zone." + stateStr].attributes.friendly_name;
       }    
       if (this.zones.indexOf(stateStr) == -1 && stateStr != "not_home" && stateStr != this.travellingState) {
+        if (typeof(stateStr)!=="string")
+          throw new Error("Unable to add state for entity " + this.config.wizards[num].entity + " of type " + typeof(stateStr) + ".");
         this.zones.push(stateStr);
       }
     }
