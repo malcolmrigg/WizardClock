@@ -17,6 +17,13 @@ class WeasleyClockCard extends HTMLElement {
         }
       }
     }
+    if (this.config.lost){
+      this.zones.push(this.config.lost);
+    }
+    if (this.config.travelling){
+      this.zones.push(this.config.travelling);
+    }
+
     for (num = 0; num < this.config.wizards.length; num++){
       if (!this._hass.states[this.config.wizards[num].entity])
         throw new Error("Unable to find state for entity " + this.config.wizards[num].entity);
@@ -37,8 +44,8 @@ class WeasleyClockCard extends HTMLElement {
         this.zones.push(stateStr);
       }
     }
-    this.zones.push(this.travellingState);
-    this.zones.push(this.lostState);
+//    this.zones.push(this.travellingState);
+//    this.zones.push(this.lostState);
     if (!this.canvas) {
       const card = document.createElement('ha-card');
       //card.header = 'Wizard Clock';
@@ -133,18 +140,18 @@ class WeasleyClockCard extends HTMLElement {
 
     ctx.beginPath();
     ctx.arc(0, 0, radius, 0, 2*Math.PI);
-    ctx.fillStyle = '#f2e6d9';
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--secondary-background-color');
     ctx.fill();
 
-    ctx.fillStyle = '#333';
-    ctx.lineWidth = radius*0.06;
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-background-color:');
+    ctx.lineWidth = radius*0.02;
     ctx.stroke();
   }
 
   drawHinge(ctx, radius) {
     ctx.beginPath();
     ctx.arc(0, 0, radius*0.05, 0, 2*Math.PI);
-    ctx.fillStyle = '#333';
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     ctx.shadowColor = "#0008";
     ctx.shadowBlur = 10;
     ctx.shadowOffsetX = 5;
@@ -161,6 +168,7 @@ class WeasleyClockCard extends HTMLElement {
       ctx.font = radius*0.15*this.fontScale + "px " + this.selectedFont;
       ctx.textBaseline="middle";
       ctx.textAlign="center";
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-text-color');
       for(num= 0; num < locations.length; num++){
           ang = num * Math.PI / locations.length * 2;
           // rotate to center of drawing position
@@ -274,7 +282,7 @@ class WeasleyClockCard extends HTMLElement {
   drawHand(ctx, pos, length, width, wizard) {
     ctx.beginPath();
     ctx.lineWidth = width;
-    ctx.fillStyle = '#333';
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     ctx.shadowColor = "#0008";
     ctx.shadowBlur = 10;
     ctx.shadowOffsetX = 5;
