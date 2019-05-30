@@ -297,7 +297,7 @@ class WeasleyClockCard extends HTMLElement {
     ctx.fill();
 
     ctx.font = width*this.fontScale + "px " + this.selectedFont;
-    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-dark-color');
+    ctx.fillStyle = 'white';
     ctx.translate(0, -length/2);
     ctx.rotate(Math.PI/2)
     if (pos < Math.PI && pos >= 0) 
