@@ -255,7 +255,7 @@ class WeasleyClockCard extends HTMLElement {
         //var location = locations.indexOf(wizards[num].location) + ((num-((wizards.length-1)/2)) / wizards.length * 0.75);
         location = location * Math.PI / locations.length * 2;
         // set targetstate
-        this.targetstate.push({pos: location, length: radius*0.7, width: radius*0.1, wizard: wizards[num].name});
+        this.targetstate.push({pos: location, length: radius*0.7, width: radius*0.1, wizard: wizards[num].name, colour: wizards[num].colour, textcolour: wizards[num].textcolour});
       }
       // update currentstate from targetstate
       if (!this.currentstate)
@@ -267,19 +267,23 @@ class WeasleyClockCard extends HTMLElement {
           this.currentstate[num].pos = this.currentstate[num].pos + ((this.targetstate[num].pos - this.currentstate[num].pos) / 60); 
         } else {
           // default to 12 o'clock to start
-          this.currentstate.push({pos: 0, length: this.targetstate[num].length, width: this.targetstate[num].width, wizard: this.targetstate[num].wizard});
+          this.currentstate.push({pos: 0, length: this.targetstate[num].length, width: this.targetstate[num].width, wizard: this.targetstate[num].wizard, colour: this.targetstate[num].colour, textcolour: this.targetstate[num].textcolour});
         }
       }
       // draw currentstate
       for (num = 0; num < wizards.length; num++){
-        this.drawHand(ctx, this.currentstate[num].pos, this.currentstate[num].length, this.currentstate[num].width, this.currentstate[num].wizard);
+        this.drawHand(ctx, this.currentstate[num].pos, this.currentstate[num].length, this.currentstate[num].width, this.currentstate[num].wizard, this.currentstate[num].colour, this.currentstate[num].textcolour);
       }
   }
 
-  drawHand(ctx, pos, length, width, wizard) {
+  drawHand(ctx, pos, length, width, wizard, colour, textcolour) {
     ctx.beginPath();
     ctx.lineWidth = width;
-    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    if (colour) {
+      ctx.fillStyle = colour;
+    } else {
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    }
     ctx.shadowColor = "#0008";
     ctx.shadowBlur = 10;
     ctx.shadowOffsetX = 5;
@@ -294,7 +298,11 @@ class WeasleyClockCard extends HTMLElement {
     ctx.fill();
 
     ctx.font = width*this.fontScale + "px " + this.selectedFont;
-    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-text-color');
+    if (textcolour) {
+      ctx.fillStyle = textcolour;
+    } else {
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-text-color');
+    }
     ctx.translate(0, -length/2);
     ctx.rotate(Math.PI/2)
     if (pos < Math.PI && pos >= 0) 
