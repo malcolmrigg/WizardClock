@@ -65,9 +65,6 @@ class WeasleyClockCard extends HTMLElement {
     }
 
     this.canvas.style.maxWidth = "-webkit-fill-available";
-    this.canvas.style.maxHeight = "-webkit-fill-available";
-    //this.canvas.style.width = "500";
-    //this.canvas.style.height = "500";
     this.canvas.width="500";
     this.canvas.height="500";
 
