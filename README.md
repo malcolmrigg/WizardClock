@@ -18,6 +18,7 @@ I decided to make it public so that other (more skillful) people could make use 
 * Locations are added dynamically as needed, however you can configure permanently shown locations by adding them to the "locations" list in the config
 * For family members without a phone (or those that don't want to be tracked with owntracks!) it can use the google calendar platform - simply create a calendar with the expected locations of that person as the name of appointments at the appropriate times
 * Font face can be customised (I use "Blackadder" for a suitably wizardy look)
+* Hand colour (and text colour on the hands) can be customised for each person
 * Hands animate fairly smoothly between states
 * "Lost" and "Travelling" state text can be customised
 
@@ -53,7 +54,7 @@ I decided to make it public so that other (more skillful) people could make use 
 ## Config
 
 * locations (optional): a list of locations that are permanently visible, others are added/removed as required
-* wizards (required): a list of entities and display names for the device trackers/calendars used to represent your wizards
+* wizards (required): a list of entities and display names for the device trackers/calendars used to represent your wizards. Now also supports setting individual colours for the hands/text.
 * fontname (required): the name of the font you want to use in the clock
 * fontface (optional): a fontface string to select a custom web-font to load
 * lost (optional): text to display when an entity is lost, defaults to "Lost". 
@@ -68,8 +69,11 @@ locations:
 wizards:
   - entity: device_tracker.harrys_phone
     name: Harry
+    colour: '#F00'
+    textcolour: '#00F'
   - entity: device_tracker.hermiones_phone
     name: Hermione
+    colour: '#0F0'
   - entity: calendar.ron
     name: Ron
   - entity: calendar.ginny
@@ -88,7 +92,7 @@ travelling: 'Between here and there'
 These are features/ideas that I'd like to add at some point, but may not happen any time soon. Feel free to add them yourself and share your code if you're able!
 
 * ~~Animations: Changes in status produce nicely animated transitions instead of just jumping about~~ Basic animations with ease-out now working, could do with ease-in too. Or possibly just going a bit mad and spinning round a couple of times before easing to the new location...
-* Make pretty: It looks fairly basic at the moment (I'm no artist!). Maybe include support for themes too, if that's possible?
-* Support for more entity types? 
-* Better text rendering - this goes along with making it pretty, perhaps include drawing the text in arcs around the outside of the clock, and handling longer location/wizard names better
+* Make pretty: It looks fairly basic at the moment (I'm no artist!). ~~Maybe include support for themes too, if that's possible?~~ Colours are now taken from whatever theme you are using by default. Hand/text colour for each wizard can be overridden if desired... so it's getting there. 
+* Support for more entity types?
+* Better text rendering - this goes along with making it pretty, ~~perhaps include drawing the text in arcs around the outside of the clock~~, and handling longer location/wizard names better. Arc text now done, with code nicked from somebody else :)
 * Pre-load custom web font before rendering - if this is even possible?
