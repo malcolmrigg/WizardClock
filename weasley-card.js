@@ -24,6 +24,13 @@ class WeasleyClockCard extends HTMLElement {
       this.zones.push(this.config.travelling);
     }
 
+    if (this.config.shaft_colour){
+      this.shaft_colour = this.config.shaft_colour;
+    }
+    else {
+      this.shaft_colour = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    }
+    
     for (num = 0; num < this.config.wizards.length; num++){
       if (!this._hass.states[this.config.wizards[num].entity])
         throw new Error("Unable to find state for entity " + this.config.wizards[num].entity);
@@ -110,7 +117,7 @@ class WeasleyClockCard extends HTMLElement {
       this.drawFace(this.ctx, this.radius);
       this.drawNumbers(this.ctx, this.radius, this.zones);
       this.drawTime(this.ctx, this.radius, this.zones, this.config.wizards);
-      this.drawHinge(this.ctx, this.radius);
+      this.drawHinge(this.ctx, this.radius, this.shaft_colour);
       // request next frame if required
       var redraw = false;
       var num;
@@ -145,10 +152,10 @@ class WeasleyClockCard extends HTMLElement {
     ctx.stroke();
   }
 
-  drawHinge(ctx, radius) {
+  drawHinge(ctx, radius, colour) {
     ctx.beginPath();
     ctx.arc(0, 0, radius*0.05, 0, 2*Math.PI);
-    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    ctx.fillStyle = colour;
     ctx.shadowColor = "#0008";
     ctx.shadowBlur = 10;
     ctx.shadowOffsetX = 5;
