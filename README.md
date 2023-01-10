@@ -54,9 +54,11 @@ I decided to make it public so that other (more skillful) people could make use 
 ## Config
 
 * locations (optional): a list of locations that are permanently visible, others are added/removed as required
+* exclude (optional): a list of locations that shall never be displayed, wizards at those locations will default to the `lost` state
 * wizards (required): a list of entities and display names for the device trackers/calendars used to represent your wizards. Now also supports setting individual colours for the hands/text.
 * fontname (required): the name of the font you want to use in the clock
 * fontface (optional): a fontface string to select a custom web-font to load
+* shaft_colour (optional): the colour of the shaft
 * lost (optional): text to display when an entity is lost, defaults to "Lost". 
 * travelling (optional): text to display when an entity is travelling, defaults to "Travelling"
 

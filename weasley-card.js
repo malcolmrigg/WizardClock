@@ -3,6 +3,7 @@ class WeasleyClockCard extends HTMLElement {
     this._hass = hass;
     this.zones = [];
     this.targetstate = [];
+    this.exclude = [];
   
     if (this.lastframe && this.lastframe != 0){
       cancelAnimationFrame(this.lastframe);
@@ -14,6 +15,13 @@ class WeasleyClockCard extends HTMLElement {
       for (num = 0; num < this.config.locations.length; num++){
         if (this.zones.indexOf(this.config.locations[num]) == -1){
           this.zones.push(this.config.locations[num]);
+        }
+      }
+    }
+    if (this.config.exclude){
+      for (num = 0; num < this.config.exclude.length; num++){
+        if (this.exclude.indexOf(this.config.exclude[num]) == -1){
+          this.exclude.push(this.config.exclude[num]);
         }
       }
     }
@@ -45,7 +53,7 @@ class WeasleyClockCard extends HTMLElement {
       {
         stateStr = this._hass.states["zone." + stateStr].attributes.friendly_name;
       }    
-      if (this.zones.indexOf(stateStr) == -1 && stateStr != "not_home" && stateStr != this.travellingState) {
+      if (this.zones.indexOf(stateStr) == -1 && stateStr != "not_home" && stateStr != this.travellingState && !this.exclude.includes(stateStr))  {
         if (typeof(stateStr)!=="string")
           throw new Error("Unable to add state for entity " + this.config.wizards[num].entity + " of type " + typeof(stateStr) + ".");
         this.zones.push(stateStr);
@@ -237,12 +245,16 @@ class WeasleyClockCard extends HTMLElement {
       var num;
       for (num = 0; num < wizards.length; num++){
         const state = this._hass.states[wizards[num].entity];
-        const stateStr = state && state.state != "off" ? 
+        var stateStr = state && state.state != "off" ? 
           (state.attributes ? 
             (state.attributes.message ? state.attributes.message : state.state) 
             : state.state
           )
           :  this.lostState;
+	
+        if (this.exclude.includes(this._hass.states["zone." + stateStr].attributes.friendly_name)) {
+          stateStr = this.lostState;
+	}
         const stateVelo = state && state.attributes ? (
           state.attributes.velocity ? state.attributes.velocity : (
             state.attributes.moving ? 16 : 0
