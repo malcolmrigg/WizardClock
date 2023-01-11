@@ -43,7 +43,7 @@ class WeasleyClockCard extends HTMLElement {
       if (!this._hass.states[this.config.wizards[num].entity])
         throw new Error("Unable to find state for entity " + this.config.wizards[num].entity);
       const state = this._hass.states[this.config.wizards[num].entity];
-      var stateStr = state && state.state && state.state != "off" ? 
+      var stateStr = state && state.state && state.state != "off" && state.state != "unknown" ? 
         (state.attributes ? 
           (state.attributes.message ? state.attributes.message : state.state) 
           : state.state
@@ -245,7 +245,7 @@ class WeasleyClockCard extends HTMLElement {
       var num;
       for (num = 0; num < wizards.length; num++){
         const state = this._hass.states[wizards[num].entity];
-        var stateStr = state && state.state != "off" ? 
+        var stateStr = state && state.state != "off" && state.state != "unknown" ? 
           (state.attributes ? 
             (state.attributes.message ? state.attributes.message : state.state) 
             : state.state
