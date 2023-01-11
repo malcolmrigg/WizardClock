@@ -252,7 +252,8 @@ class WeasleyClockCard extends HTMLElement {
           )
           :  this.lostState;
 	
-        if (this.exclude.includes(this._hass.states["zone." + stateStr].attributes.friendly_name)) {
+        if (this.exclude.includes(stateStr) ||
+      	  this._hass.states["zone." + stateStr] && this._hass.states["zone." + stateStr].attributes && this._hass.states["zone." + stateStr].attributes.friendly_name) {
           stateStr = this.lostState;
 	}
         const stateVelo = state && state.attributes ? (
