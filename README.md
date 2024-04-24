@@ -12,9 +12,9 @@ I decided to make it public so that other (more skillful) people could make use 
 
 ## Features
 
-* Shows the friendly name of the current Zone that an entity is located in (only tested using the owntracks platform)
-* If an entity isn't in a Zone then it marks that entity as "Lost"
-* If an entity has a velocity of greater than 15 then it marks that entity as "Travelling" (again, only tested using owntracks - and GPS must be turned on on your phone for velocity to be reported)
+* Shows the friendly name of the current Zone that a person/entity is located in 
+* If a person/entity isn't in a Zone then it marks that entity as "Lost" (can be customised)
+* If an entity has a velocity of greater than 15 then it marks that entity as "Travelling" (only tested using owntracks - and GPS must be turned on on your phone for velocity to be reported)
 * Locations are added dynamically as needed, however you can configure permanently shown locations by adding them to the "locations" list in the config
 * For family members without a phone (or those that don't want to be tracked with owntracks!) it can use the google calendar platform - simply create a calendar with the expected locations of that person as the name of appointments at the appropriate times
 * Font face can be customised (I use "Blackadder" for a suitably wizardy look)
@@ -26,28 +26,20 @@ I decided to make it public so that other (more skillful) people could make use 
 ## Installation
 
 1. Copy weasley-card.js to www/custom-lovelace/ in your home assistant folder, along with any particular font you want to use.
-2. Open the lovelace raw config editor and add the code below
-
-  ```
-  resources:
-    - type: js
-      url: /local/custom-lovelace/weasley-card.js?v=1
-  ```
-    
-3. Hit save and close the raw config editor, then hit the plus button to add a new card
-4. Click "Skip" in the card selection screen
-5. Add your config, see the example below
+2. Go to Settings -> Dashboards, then hit the three dots to open the custom Resources editor.
+3. Select "JavaScript Module" as the resource type, then add the URL "/local/custom-lovelace/weasley-card.js?v=1" (note if you put the javascript file somewhere other than www/custom-lovelace/ you'll need to modify this accordingly).
+5. Hit save.
+6. Edit the dashboard you want to add it to, then add a "Manual" card. 
+7. Add your config, see the example below
 
 
 ## Updating
 
 1. Copy the updated weasley-card.js over the old version
-2. Edit the url in the raw config editor to increment the version number, e.g:
+2. Edit the url in the Resources editor to increment the version number, e.g:
 
   ```
-  resources:
-    - type: js
-      url: /local/custom-lovelace/weasley-card.js?v=2
+  /local/custom-lovelace/weasley-card.js?v=2
   ```
   
 
@@ -96,7 +88,14 @@ travelling: 'Between here and there'
 These are features/ideas that I'd like to add at some point, but may not happen any time soon. Feel free to add them yourself and share your code if you're able!
 
 * ~~Animations: Changes in status produce nicely animated transitions instead of just jumping about~~ Basic animations with ease-out now working, could do with ease-in too. Or possibly just going a bit mad and spinning round a couple of times before easing to the new location...
-* Make pretty: It looks fairly basic at the moment (I'm no artist!). ~~Maybe include support for themes too, if that's possible?~~ Colours are now taken from whatever theme you are using by default. Hand/text colour for each wizard can be overridden if desired... so it's getting there. 
-* Support for more entity types?
+* Make pretty: It looks fairly basic at the moment (I'm no artist!).
+
+  * ~~Maybe include support for themes too, if that's possible?~~ Colours are now taken from whatever theme you are using by default. Hand/text colour for each wizard can be overridden if desired... so it's getting there.
+  * Add pictures on clock hands taken from people/entities or possibly zones? Or even a combination of both, so person x at location y has a special "person x at location y" picture.
+  * Add config options for clock face colours, including the ability to make them transparent.
+  
+* Better support for "speed" attributes, including for person entities looking up the speed from their current device tracker source
 * Better text rendering - this goes along with making it pretty, ~~perhaps include drawing the text in arcs around the outside of the clock~~, and handling longer location/wizard names better. Arc text now done, with code nicked from somebody else :)
 * Pre-load custom web font before rendering - if this is even possible?
+* Make available through HACS
+
