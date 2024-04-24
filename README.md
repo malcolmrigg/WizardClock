@@ -61,6 +61,7 @@ I decided to make it public so that other (more skillful) people could make use 
 * shaft_colour (optional): the colour of the shaft
 * lost (optional): text to display when an entity is lost, defaults to "Lost". 
 * travelling (optional): text to display when an entity is travelling, defaults to "Travelling"
+* width (optional): set the width (and therefore height, as it is always a circle) of the clock in pixels. Defaults to 500 if not set.
 
 ```
 type: 'custom:weasley-card'
@@ -84,6 +85,7 @@ fontname: itcblkad_font
 fontface: >-
   font-family: itcblkad_font;    src: local(itcblkad_font),
   url('/local/custom-lovelace/ITCBLKAD.TTF') format('opentype');
+width: 500
 lost: 'In mortal peril'
 travelling: 'Between here and there'
 ```
