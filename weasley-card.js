@@ -73,19 +73,22 @@ class WeasleyClockCard extends HTMLElement {
       }
       document.body.appendChild(fontstyle);
 
+      this.div = document.createElement('div');
+      this.div.style.textAlign = 'center';
       this.canvas = document.createElement('canvas');
-      card.appendChild(this.canvas);
+      this.div.appendChild(this.canvas);
+      card.appendChild(this.div);
       this.appendChild(card);
       this.ctx = this.canvas.getContext("2d");
     }
 
     this.canvas.style.maxWidth = "-webkit-fill-available";
-    this.canvas.width="500";
-    this.canvas.height="500";
+    this.canvas.width=this.config.width ? this.config.width : "500";
+    this.canvas.height=this.config.width ? this.config.width : "500";
 
     this.radius = this.canvas.height / 2;
     this.ctx.translate(this.radius, this.radius);
-    this.radius = this.radius * 0.90
+    this.radius = this.radius * 0.90;
 
     if (this.config.fontName) {
       this.selectedFont = this.config.fontName;
