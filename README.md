@@ -25,6 +25,12 @@ I decided to make it public so that other (more skillful) people could make use 
 
 ## Installation
 
+### HACS
+
+Use this repository as a custom repository in HACS.
+
+### Manual
+
 1. Copy weasley-card.js to www/custom-lovelace/ in your home assistant folder, along with any particular font you want to use.
 2. Go to Settings -> Dashboards, then hit the three dots to open the custom Resources editor.
 3. Select "JavaScript Module" as the resource type, then add the URL "/local/custom-lovelace/weasley-card.js?v=1" (note if you put the javascript file somewhere other than www/custom-lovelace/ you'll need to modify this accordingly).
@@ -33,7 +39,7 @@ I decided to make it public so that other (more skillful) people could make use 
 7. Add your config, see the example below
 
 
-## Updating
+#### Updating
 
 1. Copy the updated weasley-card.js over the old version
 2. Edit the url in the Resources editor to increment the version number, e.g:
