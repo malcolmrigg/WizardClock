@@ -201,6 +201,8 @@ class WeasleyClockCard extends HTMLElement {
             text = locations[num];
           }
 
+          text = this.isRtlLanguage(text) ? text.split("").reverse().join("") : text;
+
           // calculate height of the font. Many ways to do this - you can replace with your own!
           var div = document.createElement("div");
           div.innerHTML = text;
@@ -241,7 +243,10 @@ class WeasleyClockCard extends HTMLElement {
       }
   }
 
-
+  isRtlLanguage(text) {
+    const rtlChar = /[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+    return rtlChar.test(text);
+  }
 
   drawTime(ctx, radius, locations, wizards){
       this.targetstate = [];
