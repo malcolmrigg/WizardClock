@@ -192,7 +192,7 @@ class WeasleyClockCard extends HTMLElement {
           var startAngle = 0; 
           var inwardFacing = true;
           var kerning = 0; // can adjust kerning using this - maybe automatically adjust it based on text length? 
-          var text = locations[num].split("").reverse().join("");
+          var text = this.isRtlLanguage(locations[num]) ? locations[num] : locations[num].split("").reverse().join("");
           // if we're in the bottom half of the clock then reverse the facing of the text so that it's not upside down
           if (ang > Math.PI / 2 && ang < ((Math.PI * 2) - (Math.PI / 2))) 
           {
@@ -241,7 +241,10 @@ class WeasleyClockCard extends HTMLElement {
       }
   }
 
-
+  isRtlLanguage(text) {
+    const rtlChar = /[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+    return rtlChar.test(text);
+  }
 
   drawTime(ctx, radius, locations, wizards){
       this.targetstate = [];

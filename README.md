@@ -21,6 +21,7 @@ I decided to make it public so that other (more skillful) people could make use 
 * Hand colour (and text colour on the hands) can be customised for each person
 * Hands animate fairly smoothly between states
 * "Lost" and "Travelling" state text can be customised
+* Supports right-to-left (RTL) languages like Hebrew and other RTL languages
 
 
 ## Installation
