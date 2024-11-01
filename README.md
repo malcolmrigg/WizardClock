@@ -32,9 +32,9 @@ Use this repository as a custom repository in HACS.
 
 ### Manual
 
-1. Copy weasley-card.js to www/custom-lovelace/ in your home assistant folder, along with any particular font you want to use.
+1. Copy wizard-clock-card.js to www/custom-lovelace/ in your home assistant folder, along with any particular font you want to use.
 2. Go to Settings -> Dashboards, then hit the three dots to open the custom Resources editor.
-3. Select "JavaScript Module" as the resource type, then add the URL "/local/custom-lovelace/weasley-card.js?v=1" (note if you put the javascript file somewhere other than www/custom-lovelace/ you'll need to modify this accordingly).
+3. Select "JavaScript Module" as the resource type, then add the URL "/local/custom-lovelace/wizard-clock-card.js?v=1" (note if you put the javascript file somewhere other than www/custom-lovelace/ you'll need to modify this accordingly).
 5. Hit save.
 6. Edit the dashboard you want to add it to, then add a "Manual" card. 
 7. Add your config, see the example below
@@ -42,11 +42,11 @@ Use this repository as a custom repository in HACS.
 
 #### Updating
 
-1. Copy the updated weasley-card.js over the old version
+1. Copy the updated wizard-clock-card.js over the old version
 2. Edit the url in the Resources editor to increment the version number, e.g:
 
   ```
-  /local/custom-lovelace/weasley-card.js?v=2
+  /local/custom-lovelace/wizard-clock-card.js?v=2
   ```
   
 
@@ -63,7 +63,7 @@ Use this repository as a custom repository in HACS.
 * width (optional): set the width (and therefore height, as it is always a circle) of the clock in pixels. Defaults to 500 if not set.
 
 ```
-type: 'custom:weasley-card'
+type: 'custom:wizard-clock-card'
 locations:
   - Home
   - Work
@@ -104,5 +104,5 @@ These are features/ideas that I'd like to add at some point, but may not happen 
 * Better support for "speed" attributes, including for person entities looking up the speed from their current device tracker source
 * Better text rendering - this goes along with making it pretty, ~~perhaps include drawing the text in arcs around the outside of the clock~~, and handling longer location/wizard names better. Arc text now done, with code nicked from somebody else :)
 * Pre-load custom web font before rendering - if this is even possible?
-* Make available through HACS
+* ~~Make available through HACS~~
 
