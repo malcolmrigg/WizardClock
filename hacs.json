@@ -1,6 +1,6 @@
 {
-    "name": "Weasley Card",
+    "name": "WizardClock",
     "render_readme": true,
-    "filename": "weasley-card.js",
+    "filename": "WizardClock.js",
     "content_in_root": true
   }

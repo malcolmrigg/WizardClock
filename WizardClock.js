@@ -1,4 +1,4 @@
-class WeasleyClockCard extends HTMLElement {
+class WizardClockCard extends HTMLElement {
   set hass(hass) {
     this._hass = hass;
     this.zones = [];
@@ -348,4 +348,4 @@ class WeasleyClockCard extends HTMLElement {
     
 }
 
-customElements.define('weasley-card', WeasleyClockCard);
+customElements.define('WizardClock', WizardClockCard);

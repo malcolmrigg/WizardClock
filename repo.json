@@ -1,7 +1,7 @@
 {
-    "weasley-card": {
+    "wizardclock": {
       "version": "0.7.0",
-      "remote_location": "https://raw.githubusercontent.com/malcolmrigg/WizardClock/master/weasley-card.js",
+      "remote_location": "https://raw.githubusercontent.com/malcolmrigg/WizardClock/master/WizardClock.js",
       "visit_repo": "https://github.com/malcolmrigg/WizardClock",
       "changelog": "https://github.com/malcolmrigg/WizardClock/releases/latest"
     }
