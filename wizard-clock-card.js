@@ -348,4 +348,4 @@ class WizardClockCard extends HTMLElement {
     
 }
 
-customElements.define('WizardClock', WizardClockCard);
+customElements.define('wizard-clock-card', WizardClockCard);
